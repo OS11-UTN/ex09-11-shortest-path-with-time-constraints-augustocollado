@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.optimize import linprog
 from basic_utils import nn2na
+import matplotlib.pyplot as plt
 
 # parameters
 
@@ -34,16 +35,13 @@ Aeq = nn2na(NN)
 Beq = np.array(B)
 bounds = tuple( [ (0, None) for a in range (0, Aeq.shape[1]) ] )
 
-results = np.array(3)
+
+funs = np.empty(0)
 
 for lambdaValue in np.nditer(lambdas):
     cCirconflexe = np.transpose(Distances) + (lambdaValue * TravelTime)
-    print(cCirconflexe)
     result = linprog(cCirconflexe, A_eq = Aeq, b_eq = Beq, bounds=bounds, method="simplex")
-    indexes = np.where(np.array(result.x) > 0.9)
-    arcs_result = [arcs[i] for i in indexes]
+    funs = np.append(funs, result.fun - (lambdaValue * 8))
 
-    results = np.append(results, [lambdaValue, arcs_result, result.fun - (lambdaValue * 8)])
-
-
-print(results)
+plt.plot(lambdas, funs)
+plt.show()
