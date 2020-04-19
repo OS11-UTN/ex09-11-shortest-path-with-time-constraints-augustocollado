@@ -45,3 +45,5 @@ for lambdaValue in np.nditer(lambdas):
 
 plt.plot(lambdas, funs)
 plt.show()
+
+# Optimum lambda = 0.4
