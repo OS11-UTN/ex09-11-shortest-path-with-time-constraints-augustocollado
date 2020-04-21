@@ -41,6 +41,8 @@ while abs(previousLambda - currentLambda) > tolerance:
     step = 1 / iteration
     previousLambda = currentLambda
     currentLambda = currentLambda + (step * gradient)
+    if currentLambda < 0:
+        currentLambda = 0
     iteration = iteration + 1
 
 print(currentLambda) 
